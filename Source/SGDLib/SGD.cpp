@@ -791,15 +791,7 @@ size_t SGD<ElemType>::TrainOneEpoch(ComputationNetworkPtr net,
         blockSizePerWorker = m_modelAggregationBlockSize / m_mpi->NumNodesInUse();
     }
 
-    for (auto& node : learnableNodes)
-        node->OnEpochStart();
-    for (auto& node : featureNodes)
-        node->OnEpochStart();
-    for (auto& node : labelNodes)
-        node->OnEpochStart();
-    for (auto& node : criterionNodes)
-        node->OnEpochStart();
-    for (auto& node : evaluationNodes)
+    for (ComputationNodeBasePtr& node : net->GetAllNodes())
         node->OnEpochStart();
 
     std::vector<Matrix<ElemType>*> learnParamsGradients;
